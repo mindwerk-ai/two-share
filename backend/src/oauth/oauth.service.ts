@@ -143,7 +143,12 @@ export class OAuthService {
 
   private async signUp(user: OAuthSignInDto, ip: string) {
     // register
-    if (!this.config.get("oauth.allowRegistration")) {
+    const allowedDomain = process.env.ALLOWED_EMAIL_DOMAIN || "tw-om.de";
+    const emailDomain = user.email?.split("@")[1]?.toLowerCase();
+    if (
+      !this.config.get("oauth.allowRegistration") &&
+      emailDomain !== allowedDomain
+    ) {
       throw new ErrorPageException("no_user", "/auth/signIn", [
         `provider_${user.provider}`,
       ]);
