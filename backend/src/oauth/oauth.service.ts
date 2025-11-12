@@ -143,7 +143,19 @@ export class OAuthService {
 
   private async signUp(user: OAuthSignInDto, ip: string) {
     // register
+<<<<<<< Updated upstream
     if (!this.config.get("oauth.allowRegistration")) {
+=======
+    const allowedDomain = process.env.ALLOWED_EMAIL_DOMAIN || "tw-om.de";
+    const emailDomain = user.email?.split("@")[1]?.toLowerCase();
+
+    // Allow auto-provision if global allowRegistration is enabled
+    // OR if the user's email domain is on the whitelist
+    const allowAutoProvision =
+      this.config.get("oauth.allowRegistration") || emailDomain === allowedDomain;
+
+    if (!allowAutoProvision) {
+>>>>>>> Stashed changes
       throw new ErrorPageException("no_user", "/auth/signIn", [
         `provider_${user.provider}`,
       ]);
