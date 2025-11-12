@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   two-share:
-    image: ghcr.io/mindwerk-ai/two-share:latest
+    image: ghcr.io/mindwerk-ai/two-share:main
     restart: unless-stopped
     environment:
       - TRUST_PROXY=true
